@@ -1,0 +1,55 @@
+{
+  "name": "Mofn",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OmgImAlexis/Mofn.git"
+  },
+  "bugs": {
+    "url": "https://github.com/OmgImAlexis/Mofn/issues"
+  },
+  "homepage": "https://github.com/OmgImAlexis/Mofn#readme",
+  "scripts": {
+    "test": "xo",
+    "security": "snyk test"
+  },
+  "devDependencies": {
+    "stylelint": "^7.2.0",
+    "xo": "^0.17.1"
+  },
+  "xo": {
+    "space": 4,
+    "rules": {
+      "space-before-function-paren": [
+        "error",
+        "never"
+      ]
+    },
+    "envs": [
+      "node",
+      "es6"
+    ],
+    "globals": [
+      "log",
+      "api"
+    ],
+    "ignores": [
+      "**/*.min.js"
+    ]
+  },
+  "stylelint": {
+    "extends": "./.build/node_modules/stylelint-config-standard",
+    "rules": {
+      "indentation": [
+        4,
+        {
+          "ignore": [
+            "block"
+          ],
+          "message": "Please use 4 spaces for indentation. Tabs make OmgImAlexis sad.",
+          "severity": "error"
+        }
+      ]
+    }
+  }
+}
