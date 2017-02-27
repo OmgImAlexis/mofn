@@ -12,7 +12,9 @@
   },
   "homepage": "https://github.com/OmgImAlexis/Mofn#readme",
   "scripts": {
-    "test": "xo"
+    "start": "NODE_ENV=production && node index.js",
+    "start-dev": "NODE_ENV=develop && node index.js",
+    "test-js": "xo"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
