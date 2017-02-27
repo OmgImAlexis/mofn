@@ -14,8 +14,10 @@
   "homepage": "https://github.com/OmgImAlexis/Mofn#readme",
   "scripts": {
     "start": "NODE_ENV=production && node index.js",
-    "start-dev": "NODE_ENV=develop && node index.js",
-    "test-js": "xo"
+    "start-dev": "node index.js -d",
+    "test": "xo",
+    "test-js": "xo",
+    "test-css": "stylelint"
   },
   "dependencies": {
     "command-line-usage": "^4.0.0",

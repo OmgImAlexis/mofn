@@ -5,7 +5,7 @@ node_js:
   - "6"
   - "7"
 cache: yarn
-
+sudo:false
 # https://github.com/audreyt/node-webworker-threads/blob/master/.travis.yml
 install:
 - CXX="g++-4.8" CC="gcc-4.8" npm install
