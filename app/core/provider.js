@@ -1,10 +1,7 @@
 'use strict';
 
-const log = require('./log.js');
-
 class BaseProvider {
     constructor(options) {
-        log.info('RANDOM STUFF');
         if (options) {
             this.name = options.name || 'Generic Provider';
             this.version = options.version || '0.0.1';

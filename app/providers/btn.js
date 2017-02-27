@@ -1,18 +1,16 @@
 'use strict';
 
 const BaseProvider = require('../core/provider.js');
-const Errors = require('../core/errors.js');
 
-class DogNzbProvider extends BaseProvider {
+class BtnProvider extends BaseProvider {
     constructor() {
-        super();
-        this.name = 'Dognzb';
-        this.version = '0.0.1';
-    }
-
-    search() {
-        throw Errors.NotImplimented;
+        super({
+            name: 'BTN',
+            version: '0.0.1',
+            type: 'torrent',
+            url: 'https://broadcasthe.net'
+        });
     }
 }
 
-module.exports = DogNzbProvider;
+module.exports = BtnProvider;

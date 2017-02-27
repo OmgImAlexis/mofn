@@ -60,9 +60,14 @@
     }
   },
   "dependencies": {
+    "config": "^1.25.1",
+    "express": "^4.14.1",
     "git-rev": "^0.2.1",
     "git-rev-sync": "^1.8.0",
+    "junk": "^2.0.0",
     "opbeat": "^4.11.1",
+    "scene-release": "^1.4.0",
+    "webworker-threads": "^0.7.11",
     "winston": "^2.3.1"
   }
 }

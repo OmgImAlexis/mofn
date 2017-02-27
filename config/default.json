@@ -1,0 +1,8 @@
+{
+    "dirs": {
+        "postprocess": [
+            "/Users/xo/fakeDownloads/"
+        ]
+    },
+    "port": 3000
+}

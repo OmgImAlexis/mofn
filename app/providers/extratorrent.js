@@ -1,18 +1,18 @@
 'use strict';
 
 const BaseProvider = require('../core/provider.js');
-const Errors = require('../core/errors.js');
 
-class DogNzbProvider extends BaseProvider {
+class ExtraTorrentProvider extends BaseProvider {
     constructor() {
-        super();
-        this.name = 'Dognzb';
-        this.version = '0.0.1';
-    }
-
-    search() {
-        throw Errors.NotImplimented;
+        super({
+            name: 'Extra Torrent',
+            version: '0.0.1',
+            type: 'torrent',
+            public: true,
+            url: 'http://extratorrent.cc',
+            properStrings: ['PROPER', 'REPACK', 'REAL']
+        });
     }
 }
 
-module.exports = DogNzbProvider;
+module.exports = ExtraTorrentProvider;

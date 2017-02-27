@@ -9,11 +9,12 @@ const log = new (winston.Logger)({
                 let commitHash = git.short(path.resolve(__dirname, '../'));
                 let now = new Date();
                 let timestamp = `${now.toLocaleDateString()} ${now.toTimeString()}`;
-                return `[${timestamp}] [${options.level.toUpperCase()}] [${commitHash}] ${options.message}`;
+                let meta = options.meta.toString() === '[object Object]' ? JSON.stringify(options.meta) : options.meta;
+                return `[${timestamp}] [${options.level.toUpperCase()}] [${commitHash}] ${options.message} ${meta}`;
             }
         }),
         new (winston.transports.File)({
-            filename: path.resolve(__dirname, '../logs/application.log')
+            filename: path.resolve(__dirname, '../../logs/application.log')
         })
     ]
 });
