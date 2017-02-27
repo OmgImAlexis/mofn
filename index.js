@@ -1,38 +1,55 @@
-const opbeat = require('opbeat');
-
-if (process.env.NODE_ENV && process.env.NODE_ENV !== 'dev') {
-    require('opbeat').start({
-        appId: '7ffb55e62f',
-        organizationId: '4dd2417bac324edabbababa48b497672',
-        secretToken: '5f356314ec34bb4657ca00eb16b973996cfd11d0'
-    });
-}
-
+#!/usr/bin/env node
 // const Worker = require('webworker-threads').Worker;
 const express = require('express');
 const config = require('config');
+const argv = require('yargs').alias('v', 'verbose').alias('h', 'help').alias('d', 'debug').argv;
+const getUsage = require('command-line-usage');
 const log = require('./app/core/log.js');
-const providers = require('./app/providers');
 
-for (let provider in providers) {
-    console.dir(new providers[provider]());
+const mode = (argv.debug || process.env.NODE_ENV !== 'production') ? 'debug' : 'production';
+
+if (mode === 'debug') {
+    log.transports.console.level = 'debug';
+    log.transports.file.level = 'debug';
+} else {
+    log.transports.console.level = 'info';
+    log.transports.file.level = 'info';
 }
 
-// const b = new Worker('worker.js');
+if (argv.help) {
+    const sections = [{
+        header: 'Mofn',
+        content: 'A media manager'
+    }, {
+        header: 'Options',
+        optionList: [{
+            name: 'debug',
+            alias: 'd',
+            description: 'Turns on debug loging.'
+        }, {
+            name: 'verbose',
+            alias: 'v',
+            description: 'Turns on verbose loging.'
+        }, {
+            name: 'help',
+            alias: 'h',
+            description: 'Print this usage guide.'
+        }]
+    }];
 
-// const DogNzbProvider = require('./app/providers/dognzb.js');
-// const BitSnoopProvider = require('./app/providers/bitsnoop.js');
+    const usage = getUsage(sections);
+    console.log(usage);
+    process.exit();
+}
 
 var app = express();
 
-if (process.env.NODE_ENV && process.env.NODE_ENV !== 'dev') {
-    app.use(opbeat.middleware.express());
-}
+app.set('providers', require('./app/providers'));
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
 app.listen(config.port, () => {
-    log.info(`Starting Mofn on http://localhost:${config.port}/`);
+    log.info(`Starting Mofn in ${mode} mode on http://localhost:${config.port}/`);
 });

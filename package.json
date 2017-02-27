@@ -3,6 +3,7 @@
   "private": false,
   "description": "This was made in the mofn.",
   "version": "0.0.1",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/OmgImAlexis/Mofn.git"
@@ -15,6 +16,18 @@
     "start": "NODE_ENV=production && node index.js",
     "start-dev": "NODE_ENV=develop && node index.js",
     "test-js": "xo"
+  },
+  "dependencies": {
+    "command-line-usage": "^4.0.0",
+    "config": "^1.25.1",
+    "express": "^4.14.1",
+    "git-rev": "^0.2.1",
+    "git-rev-sync": "^1.8.0",
+    "junk": "^2.0.0",
+    "scene-release": "^1.4.0",
+    "webworker-threads": "^0.7.11",
+    "winston": "^2.3.1",
+    "yargs": "^6.6.0"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
@@ -60,16 +73,5 @@
         }
       ]
     }
-  },
-  "dependencies": {
-    "config": "^1.25.1",
-    "express": "^4.14.1",
-    "git-rev": "^0.2.1",
-    "git-rev-sync": "^1.8.0",
-    "junk": "^2.0.0",
-    "opbeat": "^4.11.1",
-    "scene-release": "^1.4.0",
-    "webworker-threads": "^0.7.11",
-    "winston": "^2.3.1"
   }
 }
