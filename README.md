@@ -4,10 +4,6 @@
 
 [![Travis branch](https://img.shields.io/travis/rust-lang/rust/master.svg)](https://travis-ci.org/omgimalexis/mofn/master) [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/sindresorhus/xo)
 
-
-A brief description of your project, what it is used for and how does life get
-awesome when someone starts to use it.
-
 ## Installing / Getting started
 
 ```shell
