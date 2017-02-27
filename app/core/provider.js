@@ -7,8 +7,7 @@ class BaseProvider {
             this.version = options.version || '0.0.1';
             this.enabled = options.enabled || false;
             this.public = options.public || false;
-            this.url = options.url || '';
-            this.urls = options.urls || {};
+            this.url = options.url.replace(/\/?$/, '/') || '';
             this.properStrings = options.properStrings || [];
             this.type = options.type || '';
             this.supports = options.supports || [];
@@ -20,6 +19,18 @@ class BaseProvider {
 
             if ('show' in this.supports) {
                 this.supportsBacklog = options.supportsBacklog || false;
+            }
+
+            // Make sure we append the base URL to other URLs if the bsase is provided
+            if (options.urls) {
+                for (let key in options.urls) {
+                    if (!options.urls[key].startsWith('http')) {
+                        options.urls[key] = options.url ? options.url + options.urls[key] : options.urls[key];
+                    }
+                }
+                this.urls = options.urls;
+            } else {
+                this.urls = {};
             }
         } else {
             throw new Error('Missing parameter');
