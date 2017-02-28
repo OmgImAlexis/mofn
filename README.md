@@ -1,4 +1,6 @@
-<!-- ![Logo of the project](https://raw.githubusercontent.com/jehna/readme-best-practices/master/sample-logo.png) -->
+<h1 align="center">
+	<img width="400" src="https://cdn.rawgit.com/OmgImAlexis/mofn/a969cf2bef3a3b7749cb2dadd625ed5da8c552df/.github/logo.svg" alt="Mofn">
+</h1>
 
 > Mofn a media manager
 
