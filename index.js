@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// const Worker = require('webworker-threads').Worker;
 const path = require('path');
 const childProcess = require('child_process');
 const split = require('split');

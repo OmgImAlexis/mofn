@@ -6,15 +6,3 @@ node_js:
   - "7"
 cache: yarn
 sudo: false
-# https://github.com/audreyt/node-webworker-threads/blob/master/.travis.yml
-install:
-- CXX="g++-4.8" CC="gcc-4.8" npm install
-
-# thanks to http://stackoverflow.com/a/30925448/1283667:
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-4.8
-    - g++-4.8
