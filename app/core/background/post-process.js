@@ -1,28 +1,25 @@
-const fs = require('fs');
-const path = require('path');
+const walk = require('walk-promise');
 const junk = require('junk');
-const sceneRelease = require('scene-release');
-const log = require('../log.js');
+// const sceneRelease = require('scene-release');
+const log = require('../log.js').postProcess;
 
-const walk = function(currentDirPath, callback) {
-    fs.readdir(currentDirPath, function(err, files) {
-        if (err) {
-            throw new Error(err);
-        }
-        files.filter(junk.not).forEach(function(name) {
-            var filePath = path.join(currentDirPath, name);
-            var stat = fs.statSync(filePath);
-            if (stat.isFile()) {
-                callback(filePath, stat);
-            } else if (stat.isDirectory()) {
-                walk(filePath, callback);
+process.on('message', function(message) {
+    log.info('Processing ' + message.path);
+    walk(message.path).then(files => {
+        return files.filter(file => {
+            if (junk.is(file.name)) {
+                log.info('Removing ' + file.name + ' as it\'s a junk file');
+            } else {
+                log.info('Keeping ' + file.name + ' as it\'s not junk file');
+            }
+            return junk.not(file.name);
+        });
+    }).then(files => {
+        process.send({
+            id: message.id,
+            data: {
+                files
             }
         });
     });
-};
-
-walk('/Users/xo/fakeDownloads/', function(filePath) {
-    // log.info(filePath);
-    let fileName = filePath.split('/').pop();
-    log.info(fileName, sceneRelease(fileName));
 });

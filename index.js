@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 // const Worker = require('webworker-threads').Worker;
 const path = require('path');
+const childProcess = require('child_process');
+const split = require('split');
 const express = require('express');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const config = require('config');
 const argv = require('yargs').alias('v', 'verbose').alias('h', 'help').alias('d', 'debug').argv;
 const getUsage = require('command-line-usage');
-const log = require('./app/core/log.js');
+const log = require('./app/core/log.js').web;
 
 const mode = (argv.debug || process.env.NODE_ENV !== 'production') ? 'debug' : 'production';
 
@@ -44,7 +47,37 @@ if (argv.help) {
     process.exit();
 }
 
+const child = childProcess.fork('./app/core/background/post-process.js');
+var taskId = 0;
+var tasks = {};
+
+function postProcess(path, callback) {
+    var id = taskId++;
+
+    child.send({id: id, path: path});
+
+    tasks[id] = callback;
+}
+
+child.on('message', function(message) {
+    // Look up the callback bound to this id and invoke it with the result
+    tasks[message.id](message.data);
+});
+
 var app = express();
+
+// Info
+app.use(morgan(':method :url :status - :response-time ms', {
+    skip: (req, res) => {
+        return res.statusCode >= 400;
+    }, stream: split().on('data', data => log.info(data))
+}));
+// Errors
+app.use(morgan(':method :url :status - :response-time ms', {
+    skip: (req, res) => {
+        return res.statusCode < 400;
+    }, stream: split().on('data', data => log.error(data))
+}));
 
 app.set('providers', require('./app/providers'));
 
@@ -55,6 +88,12 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
     res.sendFile('public/index.html');
+});
+
+app.post('/pp', (req, res) => {
+    return postProcess(res.body.path, function(result) {
+        return res.send(result);
+    });
 });
 
 app.listen(config.port, () => {
