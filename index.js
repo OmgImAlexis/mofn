@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // const Worker = require('webworker-threads').Worker;
+const path = require('path');
 const express = require('express');
+const bodyParser = require('body-parser');
 const config = require('config');
 const argv = require('yargs').alias('v', 'verbose').alias('h', 'help').alias('d', 'debug').argv;
 const getUsage = require('command-line-usage');
@@ -46,8 +48,13 @@ var app = express();
 
 app.set('providers', require('./app/providers'));
 
+// assets. Static JS, CSS, fonts
+app.use('/', express.static(path.join(__dirname, './public')));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.sendFile('public/index.html');
 });
 
 app.listen(config.port, () => {

@@ -20,6 +20,7 @@
     "test-css": "stylelint"
   },
   "dependencies": {
+    "body-parser": "^1.16.1",
     "command-line-usage": "^4.0.0",
     "config": "^1.25.1",
     "express": "^4.14.1",
