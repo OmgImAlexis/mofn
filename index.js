@@ -64,6 +64,8 @@ child.on('message', function(message) {
 });
 
 var app = express();
+var server = require('http').createServer(app); // eslint-disable-line import/order
+var io = require('socket.io').listen(server); // eslint-disable-line import/order
 
 // Info
 app.use(morgan(':method :url :status - :response-time ms', {
@@ -78,6 +80,7 @@ app.use(morgan(':method :url :status - :response-time ms', {
     }, stream: split().on('data', data => log.error(data))
 }));
 
+app.set('io', io);
 app.set('providers', require('./app/providers'));
 
 // assets. Static JS, CSS, fonts
@@ -90,11 +93,12 @@ app.get('/', (req, res) => {
 });
 
 app.post('/pp', (req, res) => {
-    return postProcess(res.body.path, function(result) {
+    io.sockets.emit('notification', `Running PP on ${req.body.path}`);
+    return postProcess(req.body.path, function(result) {
         return res.send(result);
     });
 });
 
-app.listen(config.port, () => {
+server.listen(config.port, () => {
     log.info(`Starting Mofn in ${mode} mode on http://localhost:${config.port}/`);
 });

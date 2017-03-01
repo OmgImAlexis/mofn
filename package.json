@@ -29,6 +29,7 @@
     "junk": "^2.1.0",
     "morgan": "^1.8.1",
     "scene-release": "^1.4.0",
+    "socket.io": "^1.7.3",
     "split": "^1.0.0",
     "walk-promise": "^0.2.0",
     "winston": "^2.3.1",
